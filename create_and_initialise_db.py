@@ -110,8 +110,8 @@ INSERT INTO USERS (User_id, Email, Birthday, Country, Gender, Inscription_date) 
 country = ["FR", "GB", "DE", "BR"]
 gender = ["M", "F"]
 
-# Insert 1000 random users
-for i in range(1000):
+# Insert 100 random users
+for i in range(100):
     cur.execute(
         insert_users_sql,
         (
@@ -124,7 +124,7 @@ for i in range(1000):
         ),
     )
 
-print(datetime.today(), "1000 users have been created")
+print(datetime.today(), "100 users have been created")
 con.commit()
 
 # ARTISTS, ALBUMS & SONGS
@@ -223,7 +223,7 @@ insert_streams_sql = """
 INSERT INTO STREAMS (Sng_id, User_id, Offer_id, Offer_TnB, Country, Context_of_the_stream,
 Streams_duration, Stream_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 """
-for i in range(10000):
+for i in range(100000):
     cur.execute(
         insert_streams_sql,
         (
@@ -234,7 +234,7 @@ for i in range(10000):
             country[randint(0, 3)],
             context[randint(0, 5)],
             randint(1, 320),
-            "%s-%s-%s" % (str(randint(2010, 2019)), str(randint(1, 12)), str(randint(1, 27))),
+            "%s-%s-%s" % (str(randint(2016, 2019)), str(randint(1, 12)), str(randint(1, 27))),
         ),
     )
     con.commit()
