@@ -124,6 +124,7 @@ for i in range(1000):
     )
 
 print(datetime.today(), "1000 users have been created")
+con.commit()
 
 # ARTISTS, ALBUMS & SONGS
 # Create tables
@@ -157,9 +158,11 @@ CREATE TABLE SONGS(
 cur.execute(create_songs_tbl_sql)
 print(datetime.today(), "SONGS table created")
 
+con.commit()
+
 # Populate tables
 
-artist_list = ["Metronomy", "smiths", "velvet_underground", "led_zeppelin"]
+artist_list = ["Metronomy", "joy_division"]
 insert_artist_sql = """
 INSERT INTO ARTISTS (Artist_id, Artist_name) VALUES (?, ?)
 """
@@ -175,6 +178,7 @@ for artist in artist_list:
     artist_id, artist_name = get_artist(artist)
     cur.execute(insert_artist_sql, (artist_id, artist_name))
     print(datetime.today(), "Artist %s created" % artist_name)
+    con.commit()
 
     # Retrieve albums for the given artist and insert
     album_dict = get_list_of_albums(artist_id)
@@ -184,6 +188,7 @@ for artist in artist_list:
         creation_date = album["release_date"]
         cur.execute(insert_albums_sql, (album_id, album_title, creation_date))
         print(datetime.today(), "Album %s created" % album_title)
+        con.commit()
 
         # Retrieve songs on a given album
         songs_dict = get_list_of_songs(album_id)
@@ -192,3 +197,6 @@ for artist in artist_list:
             sng_title = song["title"]
             cur.execute(insert_songs_sql, (sng_id, sng_title, album_id, artist_id, creation_date))
             print(datetime.today(), "Song %s created" % sng_title)
+            con.commit()
+
+con.close()
