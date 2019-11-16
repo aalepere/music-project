@@ -15,6 +15,7 @@ import sqlite3
 from datetime import datetime
 from random import randint
 
+import pandas as pd
 import requests
 from requests.exceptions import HTTPError
 
@@ -198,5 +199,44 @@ for artist in artist_list:
             cur.execute(insert_songs_sql, (sng_id, sng_title, album_id, artist_id, creation_date))
             print(datetime.today(), "Song %s created" % sng_title)
             con.commit()
+# STREAMS
+# Create table
+create_streams_tbl_sql = """
+CREATE TABLE STREAMS(
+    Sng_id integer NOT NULL,
+    User_id integer NOT NULL,
+    Offer_id integer NOT NULL,
+    Offer_TnB BOOLEAN NOT NULL,
+    Country CHAR(2) NOT NULL,
+    Context_of_the_stream VARCHAR(50) NOT NULL,
+    Streams_duration integer NOT NULL,
+    Stream_date DATE NOT NULL,
+    FOREIGN KEY(Sng_id) REFERENCES SONGS(Sng_id),
+    FOREIGN KEY(User_id) REFERENCES USERS(User_id))"""
+cur.execute(create_streams_tbl_sql)
+print(datetime.today(), "STREAMS table created")
+con.commit()
+
+context = ["home page", "playist", "artist", "radio", "flow", "library"]
+songs = list(pd.read_sql_query("select * from SONGS;", con)["Sng_id"])
+insert_streams_sql = """
+INSERT INTO STREAMS (Sng_id, User_id, Offer_id, Offer_TnB, Country, Context_of_the_stream,
+Streams_duration, Stream_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+"""
+for i in range(10000):
+    cur.execute(
+        insert_streams_sql,
+        (
+            songs[randint(0, len(songs) - 1)],
+            randint(0, 1000),
+            randint(0, 4),
+            randint(0, 1),
+            country[randint(0, 3)],
+            context[randint(0, 5)],
+            randint(1, 320),
+            "%s-%s-%s" % (str(randint(2010, 2019)), str(randint(1, 12)), str(randint(1, 27))),
+        ),
+    )
+    con.commit()
 
 con.close()
