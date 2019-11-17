@@ -20,7 +20,7 @@ CREATE TABLE ARTISTS(
     Artist_name VARCHAR(150) NOT NULL)
  ```
 * **ALBUMS**: All albums recorded by a given artist
-``sql
+```sql
 CREATE TABLE ALBUMS(
     Album_id integer PRIMARY KEY,
     Album_title VARCHAR(150) NOT NULL,
@@ -177,3 +177,7 @@ WHERE R.RANK = 100
   AND strftime('%Y-%m', U.Inscription_date) = '2018-01'
 ```
 # TODOS
+* [ ] Add a diagram of the data model
+* [ ] Implement unit tests
+* [ ] Put CI/CD pipeline in place
+* [ ] A couple of updates are required in `create_and_initialise_db.py`; see source code
