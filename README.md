@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/aalepere/music-project/badge)](https://www.codefactor.io/repository/github/aalepere/music-project)
+
 # Introduction
 This repo creates a music database, then populates it through the Deezer REST API as well as randomly generated records.
 
