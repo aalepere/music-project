@@ -219,6 +219,36 @@ con.commit()
 
 context = ["home page", "playist", "artist", "radio", "flow", "library"]
 songs = list(pd.read_sql_query("select * from SONGS;", con)["Sng_id"])
+months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+days = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+]
 insert_streams_sql = """
 INSERT INTO STREAMS (Sng_id, User_id, Offer_id, Offer_TnB, Country, Context_of_the_stream,
 Streams_duration, Stream_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -234,7 +264,7 @@ for i in range(100000):
             country[randint(0, 3)],
             context[randint(0, 5)],
             randint(1, 320),
-            "%s-%s-%s" % (str(randint(2016, 2019)), str(randint(1, 12)), str(randint(1, 27))),
+            "%s-%s-%s" % (str(randint(2016, 2019)), months[randint(0, 11)], days[randint(0, 26)]),
         ),
     )
     con.commit()
